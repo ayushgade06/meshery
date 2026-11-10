@@ -86,13 +86,14 @@ Meshery's internal address differs from the external URL, so you must tell
 Meshery its external callback address:
 
 - **`MESHERY_SERVER_CALLBACK_URL`** - overrides the OAuth callback URL. Set it to
-  Meshery's external base URL; the effective callback path is
-  `/api/user/token`.
+  Meshery's full external callback URL, including the `/api/user/token` path.
+  Meshery uses the value exactly as given; it adds the path only when the
+  variable is unset.
 
 ```bash
 helm install meshery meshery/meshery --namespace meshery --create-namespace \
   --set env.PROVIDER=Meshery \
-  --set env.MESHERY_SERVER_CALLBACK_URL=https://meshery.example.com
+  --set env.MESHERY_SERVER_CALLBACK_URL=https://meshery.example.com/api/user/token
 ```
 
 Symptoms of a missing or wrong callback URL include login redirect loops, "redirect
@@ -103,7 +104,8 @@ application, register the same external callback
 
 {{% alert title="Callback URL and ingress go together" color="info" %}}
 If you front Meshery with an ingress (you should), set
-`MESHERY_SERVER_CALLBACK_URL` to the public hostname at the same time. See
+`MESHERY_SERVER_CALLBACK_URL` to the public callback URL
+(`https://<public-host>/api/user/token`) at the same time. See
 [Networking & Connectivity]({{< ref "installation/production/networking-and-connectivity.md" >}})
 for the ingress, TLS, and WebSocket configuration the OAuth flow depends on.
 {{% /alert %}}
@@ -170,7 +172,8 @@ Remote Provider is required for multi-user production.
 - [ ] `PROVIDER` set to a Remote Provider name (never `Local`/`None` in
       production).
 - [ ] `PROVIDER_BASE_URLS` restricted to the allowed Remote Provider(s).
-- [ ] `MESHERY_SERVER_CALLBACK_URL` set to the external URL; matching redirect
+- [ ] `MESHERY_SERVER_CALLBACK_URL` set to the full external callback URL
+      (ending in `/api/user/token`); matching redirect
       URI registered with the provider's OAuth application.
 - [ ] All authenticated traffic served over TLS (`https://`/`wss://`).
 - [ ] Custom keys/permissions (if any) version-controlled and mounted

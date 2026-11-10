@@ -176,11 +176,11 @@ Remote Provider OAuth flow to complete, set the callback URL to Meshery's
 
 ```bash
 helm install meshery meshery/meshery --namespace meshery --create-namespace \
-  --set env.MESHERY_SERVER_CALLBACK_URL=https://meshery.example.com
+  --set env.MESHERY_SERVER_CALLBACK_URL=https://meshery.example.com/api/user/token
 ```
 
-The callback path Meshery uses is `/api/user/token`, so the effective callback
-becomes `https://meshery.example.com/api/user/token`. If login redirects fail or
+Include the `/api/user/token` path: Meshery uses the value exactly as given and
+does not add the path for you. If login redirects fail or
 loop when behind a proxy, a missing or incorrect callback URL is the usual
 cause. See
 [Authentication, Authorization & Identity]({{< ref "installation/production/authentication-and-identity.md" >}})
