@@ -27,7 +27,7 @@ Optionally, move `mesheryctl.exe` to a folder in your `PATH` so you can run it f
 
 <!-- Meshery server supports customizing authentication flow callback URL, which can be configured in the following way
   <pre class="codeblock-pre">
-  <div class="codeblock"><div class="clipboardjs">MESHERY_SERVER_CALLBACK_URL=https://custom-host ./mesheryctl system start</div></div>
+  <div class="codeblock"><div class="clipboardjs">MESHERY_SERVER_CALLBACK_URL=https://custom-host/api/user/token ./mesheryctl system start</div></div>
   </pre>
 
 Type `yes` when prompted to choose to configure a file. To get started, choose Docker as your platform to deploy Meshery. -->
